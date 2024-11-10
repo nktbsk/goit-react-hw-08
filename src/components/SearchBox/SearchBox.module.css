@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px;
+  background-color: lightpink;
+  width: 300px;
+  margin-top: 40px;
+  border: 2px solid black;
+  border-radius: 7px;
+}
+.label {
+}
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border: 1px solid black;
+  outline: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.search::placeholder {
+  padding-left: 5px;
+  font-size: 14px;
+}
+.span {
+  font-size: 14px;
+}

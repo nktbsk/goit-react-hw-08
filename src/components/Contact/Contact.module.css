@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  border: 2px solid black;
+  width: 300px;
+  border-radius: 10px;
+  gap: 30px;
+  padding: 10px;
+  background-color: lightpink;
+  align-items: center;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.listItem {
+  display: flex;
+  gap: 6px;
+}
+.icon {
+  font-size: 18px;
+}
+.span {
+}
+.btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  right: 15px;
+  font-size: 18px;
+  border: 1px solid black;
+}
+.btn:hover {
+  background-color: #dcdcdc;
+}
