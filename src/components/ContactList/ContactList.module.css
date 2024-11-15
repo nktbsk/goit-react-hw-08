@@ -1,8 +1,13 @@
 .list {
   display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0 0 50px;
+  gap: 10px;
+  height: 100%;
+}
+
+.text {
+  margin-top: 20px;
+  margin-left: 20px;
+  color: #d7d7d9;
 }

@@ -1,54 +1,55 @@
-import ContactForm from "./components/ContactForm/ContactForm";
-import ContactList from "./components/ContactList/ContactList";
-import SearchBox from "./components/SearchBox/SearchBox";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectError, selectIsLoading } from "./redux/contactsSlice";
-import { fetchContacts } from "./redux/contactsOps";
-import { useEffect } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { lazy, useEffect, Suspense } from "react";
 
-export default function App() {
+import { refreshUser } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/selectors";
+
+import Loader from "./components/Loader/Loader";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
+import Layout from "./components/Layout/Layout";
+
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const RegistrationPage = lazy(() =>
+  import("./pages/RegistrationPage/RegistrationPage")
+);
+const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
+const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
+
+function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts())
-      .unwrap()
-      .then(() => {
-        toast.success("The phonebook is loaded!");
-      })
-      .catch((error) => {
-        toast.error("Failed to download phonebook!");
-      });
+    dispatch(refreshUser());
   }, [dispatch]);
 
+  if (isRefreshing) {
+    return <Loader />;
+  }
+
   return (
-    <div>
-      <h1 className="title">Phonebook</h1>
-      <ContactForm />
-      {error && <ErrorMessage />}
-      {isLoading && <Loader />}
-      <SearchBox />
-      <ContactList />
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          success: {
-            style: {
-              background: "#e6f5d0",
-            },
-          },
-          error: {
-            icon: "❌",
-            style: {
-              background: "#f0a7a1",
-            },
-          },
-        }}
-      />
-    </div>
+    <Layout>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/register"
+            element={<RestrictedRoute component={<RegistrationPage />} />}
+          />
+          <Route
+            path="/login"
+            element={<RestrictedRoute component={<LoginPage />} />}
+          />
+          <Route
+            path="/contacts"
+            element={<PrivateRoute component={<ContactsPage />} />}
+          />
+        </Routes>
+      </Suspense>
+    </Layout>
   );
 }
+
+export default App;

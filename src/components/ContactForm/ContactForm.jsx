@@ -1,59 +1,38 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { nanoid } from "nanoid";
-import * as Yup from "yup";
 import style from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContacts } from "../../redux/contactsOps";
-import toast from "react-hot-toast";
+import { addContacts } from "../../redux/contacts/operations";
+import { validationContacts } from "../../utils/yup";
 
-// Валидация
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Too short!")
-    .max(50, "Too long!")
-    .required("Required"),
-  phone: Yup.string()
-    .min(3, "Too short!")
-    .max(50, "Too long!")
-    .required("Required"),
-});
+const initialValues = {
+  name: "",
+  number: "",
+};
 
 const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(
-      addContacts({
-        id: nanoid(),
-        name: values.name,
-        number: values.phone,
-      })
-    )
-      .unwrap()
-      .then(() => {
-        toast.success("Contact successfully added!");
-      })
-      .catch((error) => {
-        toast.error("Failed to add contact!");
-      });
+    dispatch(addContacts(values));
     actions.resetForm();
   };
 
   return (
     <Formik
-      initialValues={{ name: "", phone: "", id: "" }}
-      validationSchema={validationSchema}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={validationContacts}
     >
       <Form className={style.form}>
         <label className={style.label}>
-          <span className={style.span}>Name</span>
+          Name
           <Field
             className={style.field}
             type="text"
             name="name"
             placeholder="Alina Becker"
+            autoComplete="off"
           />
           <ErrorMessage
             name="name"
@@ -61,22 +40,21 @@ const ContactForm = () => {
             className={style.errorMessage}
           />
         </label>
-
         <label className={style.label}>
-          <span className={style.span}>Number</span>
+          Number
           <Field
             className={style.field}
-            type="text"
-            name="phone"
+            type="tel"
+            name="number"
             placeholder="000-000-0000"
+            autoComplete="off"
           />
           <ErrorMessage
-            name="phone"
+            name="number"
             component="div"
             className={style.errorMessage}
           />
         </label>
-
         <button className={style.btn} type="submit">
           <IoPersonAddOutline className={style.icon} />
         </button>

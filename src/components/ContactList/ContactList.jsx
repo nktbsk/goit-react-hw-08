@@ -1,17 +1,40 @@
 import { useSelector } from "react-redux";
-import Contact from "../Contact/Contact";
+import {
+  selectFilter,
+  selectFilteredContacts,
+} from "../../redux/filters/selectors";
+
+import Contact from "../contact/Contact";
 import style from "./ContactList.module.css";
-import { selectFilterContacts } from "../../redux/contactsSlice";
+import { selectLoading } from "../../redux/contacts/selectors";
 
 const ContactList = () => {
-  const contacts = useSelector(selectFilterContacts);
+  const filteredList = useSelector(selectFilteredContacts);
+  const startFilter = useSelector(selectFilter);
+  const isLoading = useSelector(selectLoading);
 
   return (
-    <ul className={style.list}>
-      {contacts.map((contact) => (
-        <Contact key={contact.id} contact={contact} />
-      ))}
-    </ul>
+    <>
+      {!startFilter && filteredList.length === 0 && !isLoading && (
+        <p className={style.text}>There are no contacts yet 😔</p>
+      )}
+      {startFilter && filteredList.length === 0 ? (
+        <p className={style.text}>
+          There are no contacts according to your search...
+        </p>
+      ) : (
+        <ul className={style.list}>
+          {filteredList.map((item) => (
+            <Contact
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              number={item.number}
+            />
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 

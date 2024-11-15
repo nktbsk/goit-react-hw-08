@@ -1,0 +1,15 @@
+.container {
+  padding: 20px;
+  background-color: #4f6f8c;
+  width: 1440px;
+  height: 100vh;
+  margin: auto;
+  border-radius: 5px;
+  margin-top: 3px;
+}
+.text {
+  margin: auto;
+  width: 80%;
+  padding-top: 20px;
+  color: #d7d7d9;
+}
