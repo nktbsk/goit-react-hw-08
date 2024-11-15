@@ -4,7 +4,7 @@ import {
   selectFilteredContacts,
 } from "../../redux/filters/selectors";
 
-import Contact from "../contact/Contact";
+import Contact from "../Contact/Contact";
 import style from "./ContactList.module.css";
 import { selectLoading } from "../../redux/contacts/selectors";
 
