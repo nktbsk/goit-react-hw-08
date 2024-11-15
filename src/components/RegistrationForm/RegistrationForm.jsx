@@ -65,7 +65,7 @@ const RegistrationForm = () => {
               name="password"
               className={style.field}
               placeholder="Enter password..."
-              autocomplete="off"
+              autoComplete="off"
             />
             <ErrorMessage
               className={style.errorMessage}
