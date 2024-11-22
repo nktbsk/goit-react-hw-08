@@ -1,10 +1,11 @@
 import { useState } from "react";
+
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlinePhone } from "react-icons/hi2";
-import { GoTrash } from "react-icons/go";
+
 import style from "./Contact.module.css";
 
-import Modal from "../Modal/Modal";
+import ModalContact from "../ModalContact/ModalContact";
 
 const Contact = ({ id, name, number }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,19 +23,25 @@ const Contact = ({ id, name, number }) => {
   };
 
   return (
-    <li className={style.item}>
-      <div className={style.wrapper}>
-        <p className={style.items}>
-          <AiOutlineUser className={style.icon} /> {name}
-        </p>
-        <p className={style.items}>
-          <HiOutlinePhone className={style.icon} /> {number}
-        </p>
-      </div>
-      <button className={style.btn} type="button" onClick={handleClick}>
-        <GoTrash />
+    <li>
+      <button className={style.item} onClick={handleClick}>
+        <div className={style.wrapper}>
+          <p className={style.items}>
+            <AiOutlineUser className={style.icon} /> {name}
+          </p>
+          <p className={style.items}>
+            <HiOutlinePhone className={style.icon} /> {number}
+          </p>
+        </div>
       </button>
-      {isModalOpen && <Modal id={id} onModalClose={onModalClose} />}
+      {isModalOpen && (
+        <ModalContact
+          onModalClose={onModalClose}
+          name={name}
+          number={number}
+          id={id}
+        />
+      )}
     </li>
   );
 };

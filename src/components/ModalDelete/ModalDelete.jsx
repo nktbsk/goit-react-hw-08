@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { TiArrowBack } from "react-icons/ti";
 import { GrStatusGood } from "react-icons/gr";
 
-import style from "./Modal.module.css";
+import style from "./ModalDelete.module.css";
 import { deleteContact } from "../../redux/contacts/operations";
 
-const Modal = ({ id, onModalClose }) => {
+const ModalDelete = ({ id, onModalClose }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,4 +57,4 @@ const Modal = ({ id, onModalClose }) => {
   );
 };
 
-export default Modal;
+export default ModalDelete;

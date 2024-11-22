@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#  Link to [API](https://connections-api.goit.global/docs/)
